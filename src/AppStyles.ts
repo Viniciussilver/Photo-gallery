@@ -40,6 +40,10 @@ export const PhotoList = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
+
+  @media screen and (max-width: 940px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `
 
 export const UploadForm = styled.form`

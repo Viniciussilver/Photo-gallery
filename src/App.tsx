@@ -12,15 +12,15 @@ const App = () => {
 
   const [uploading, setUploading] = useState(false)
 
+  const getPhotos = async () => {
+    setLoading(true)
+
+    setList(await Photos.getAll())
+
+    setLoading(false)
+  }
+
   useEffect(() => {
-    const getPhotos = async () => {
-      setLoading(true)
-
-      setList(await Photos.getAll())
-
-      setLoading(false)
-    }
-
     getPhotos()
   }, [])
 
@@ -51,6 +51,11 @@ const App = () => {
     }
   }
 
+  const handleDelete = async (name: string) => {
+    await Photos.deletePhoto(name)
+    getPhotos()
+  }
+
   return (
     <C.Container>
       <C.Area>
@@ -65,22 +70,27 @@ const App = () => {
         {loading && (
           <C.ScreenWarning>
             <div className="emoji">🤚🏽</div>
-            <div>Carregando...</div>
+            <h2>Carregando...</h2>
           </C.ScreenWarning>
         )}
 
         {!loading && list.length > 0 && (
           <C.PhotoList>
             {list.map((item, index) => (
-              <PhotoItem key={index} name={item.name} url={item.url} />
+              <PhotoItem
+                key={index}
+                name={item.name}
+                url={item.url}
+                onClick={name => handleDelete(name)}
+              />
             ))}
           </C.PhotoList>
         )}
 
         {!loading && list.length === 0 && (
           <C.ScreenWarning>
-            <div className="emoji">😐</div>
-            <div>Não há fotos cadastradas.</div>
+            <div className="emoji">😑</div>
+            <h2>Não há fotos cadastradas.</h2>
           </C.ScreenWarning>
         )}
       </C.Area>

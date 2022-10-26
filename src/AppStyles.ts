@@ -29,6 +29,7 @@ export const Header = styled.h1`
 
 export const ScreenWarning = styled.div`
   text-align: center;
+  margin-top: 60px;
 
   .emoji {
     font-size: 50px;
@@ -51,6 +52,12 @@ export const UploadForm = styled.form`
   padding: 15px;
   border-radius: 10px;
   margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+
+  span {
+    margin-left: 20px;
+  }
 
   input[type='submit'] {
     background-color: #756df4;

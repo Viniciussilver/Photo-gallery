@@ -2,15 +2,13 @@ import React from 'react'
 import { Photo } from '../../types/Photo'
 import * as C from './style'
 
-export const PhotoItem = ({
-  name,
-  url,
-  onClick,
-}: {
+type PhotoProps = {
   name: string
   url: string
   onClick: (name: string) => {}
-}) => {
+}
+
+export const PhotoItem = ({ name, url, onClick }: PhotoProps) => {
   return (
     <C.Container>
       <img src={url} alt={name} />

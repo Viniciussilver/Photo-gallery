@@ -1,5 +1,7 @@
 import { useState, useEffect, FormEvent } from 'react'
 
+import { Ring, LineWobble } from '@uiball/loaders'
+
 import * as Photos from './services/photos'
 
 import * as C from './AppStyles'
@@ -64,13 +66,18 @@ const App = () => {
         <C.UploadForm method="post" onSubmit={handleFormSubmit}>
           <input type="file" name="image" />
           <input type="submit" value="Enviar" />
-          <span>{uploading ? 'Enviando...' : ''}</span>
+          <span>
+            {uploading ? (
+              <LineWobble size={50} lineWeight={5} speed={1.75} color="#fff" />
+            ) : (
+              ''
+            )}
+          </span>
         </C.UploadForm>
 
         {loading && (
           <C.ScreenWarning>
-            <div className="emoji">🤚🏽</div>
-            <h2>Carregando...</h2>
+            <Ring size={50} lineWeight={5} speed={2} color="#fff" />
           </C.ScreenWarning>
         )}
 
@@ -89,7 +96,6 @@ const App = () => {
 
         {!loading && list.length === 0 && (
           <C.ScreenWarning>
-            <div className="emoji">😑</div>
             <h2>Não há fotos cadastradas.</h2>
           </C.ScreenWarning>
         )}

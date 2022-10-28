@@ -7,12 +7,15 @@ import * as Photos from './services/photos'
 import * as C from './AppStyles'
 import { Photo } from './types/Photo'
 import { PhotoItem } from './components/PhotoItem'
+import { Image } from './components/Image'
 
 const App = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [list, setList] = useState<Photo[]>([])
 
   const [uploading, setUploading] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [urlImg, setUrlImg] = useState<string>('')
 
   const getPhotos = async () => {
     setLoading(true)
@@ -58,6 +61,11 @@ const App = () => {
     getPhotos()
   }
 
+  const openImage = (e: string): any => {
+    setUrlImg(e)
+    setOpen(true)
+  }
+
   return (
     <C.Container>
       <C.Area>
@@ -68,7 +76,7 @@ const App = () => {
           <input type="submit" value="Enviar" />
           <span>
             {uploading ? (
-              <LineWobble size={50} lineWeight={5} speed={1.75} color="#fff" />
+              <LineWobble size={70} lineWeight={5} speed={1.75} color="#fff" />
             ) : (
               ''
             )}
@@ -77,7 +85,7 @@ const App = () => {
 
         {loading && (
           <C.ScreenWarning>
-            <Ring size={50} lineWeight={5} speed={2} color="#fff" />
+            <Ring size={45} lineWeight={5} speed={2} color="#fff" />
           </C.ScreenWarning>
         )}
 
@@ -89,6 +97,7 @@ const App = () => {
                 name={item.name}
                 url={item.url}
                 onClick={name => handleDelete(name)}
+                viewImg={e => openImage(e)}
               />
             ))}
           </C.PhotoList>
@@ -99,6 +108,8 @@ const App = () => {
             <h2>Não há fotos cadastradas.</h2>
           </C.ScreenWarning>
         )}
+
+        <Image url={urlImg} open={open} onClick={() => setOpen(false)} />
       </C.Area>
     </C.Container>
   )
